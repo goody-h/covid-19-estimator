@@ -13,9 +13,15 @@ const getImpact = ({ data, impactFactor }) => {
 
   const infectionsByRequestedTime = currentlyInfected * (2 ** growthFactor);
 
+  const severeCasesByRequestedTime = infectionsByRequestedTime * 0.15;
+
+  const hospitalBedsByRequestedTime = (data.totalHospitalBeds * 0.35) - severeCasesByRequestedTime;
+
   return {
     currentlyInfected,
-    infectionsByRequestedTime
+    infectionsByRequestedTime,
+    severeCasesByRequestedTime: Math.trunc(severeCasesByRequestedTime),
+    hospitalBedsByRequestedTime: Math.trunc(hospitalBedsByRequestedTime)
   };
 };
 
