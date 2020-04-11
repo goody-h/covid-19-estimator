@@ -7,6 +7,7 @@ const getImpact = ({ data, impactFactor }) => {
   };
   const days = data.timeToElapse * (dayFactor[data.periodType] || 1);
   const growthFactor = Math.floor(days / 3.0);
+  const { region } = data;
 
   // Output data
   const currentlyInfected = data.reportedCases * impactFactor;
@@ -17,11 +18,21 @@ const getImpact = ({ data, impactFactor }) => {
 
   const hospitalBedsByRequestedTime = (data.totalHospitalBeds * 0.35) - severeCasesByRequestedTime;
 
+  const casesForICUByRequestedTime = infectionsByRequestedTime * 0.05;
+
+  const casesForVentilatorsByRequestedTime = infectionsByRequestedTime * 0.02;
+
+  const dollarsInFlight = (infectionsByRequestedTime * region.avgDailyIncomePopulation
+    * region.avgDailyIncomeInUSD) / days;
+
   return {
     currentlyInfected,
     infectionsByRequestedTime,
     severeCasesByRequestedTime: Math.trunc(severeCasesByRequestedTime),
-    hospitalBedsByRequestedTime: Math.trunc(hospitalBedsByRequestedTime)
+    hospitalBedsByRequestedTime: Math.trunc(hospitalBedsByRequestedTime),
+    casesForICUByRequestedTime: Math.trunc(casesForICUByRequestedTime),
+    casesForVentilatorsByRequestedTime: Math.trunc(casesForVentilatorsByRequestedTime),
+    dollarsInFlight: Math.trunc(dollarsInFlight)
   };
 };
 
