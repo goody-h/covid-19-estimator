@@ -1,0 +1,8 @@
+{
+    "appService.zipIgnorePattern": [
+        "node_modules{,/**}",
+        ".vscode{,/**}"
+    ],
+    "appService.defaultWebAppToDeploy": "/subscriptions/40fe838b-6ee9-466a-959b-c681d6a4f4c1/resourceGroups/covid-19/providers/Microsoft.Web/sites/covid-19-estimator",
+    "appService.deploySubpath": ""
+}
