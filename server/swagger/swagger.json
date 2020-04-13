@@ -1,0 +1,252 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "This is an API for estimating covid 19 cases",
+        "version": "1.0.0",
+        "title": "Covid 19 estimator",
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {
+            "email": "goodhopeordu@yahoo.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        }
+    },
+    "host": "covid-19-estimator.azurewebsites.net",
+    "basePath": "/api/v1/on-covid-19",
+    "tags": [{
+        "name": "predictor",
+        "description": "Covid 19 predictor",
+        "externalDocs": {
+            "description": "Find out more",
+            "url": "community.andela.com/"
+        }
+    }],
+    "schemes": [
+        "https",
+        "http"
+    ],
+    "paths": {
+        "/": {
+            "post": {
+                "tags": [
+                    "predictor"
+                ],
+                "summary": "Predict future cases",
+                "description": "",
+                "operationId": "getDefaultPrediction",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [{
+                    "in": "body",
+                    "name": "body",
+                    "description": "Current data passed to API",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/definitions/Data"
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/Estimates"
+                        }
+                    },
+                    "405": {
+                        "description": "Invalid input"
+                    }
+                }
+            }
+        },
+        "/json": {
+            "post": {
+                "tags": [
+                    "predictor"
+                ],
+                "summary": "Predict future cases in Json",
+                "description": "",
+                "operationId": "getJsonPrediction",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [{
+                    "in": "body",
+                    "name": "body",
+                    "description": "Current data passed to API",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/definitions/Data"
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/Estimates"
+                        }
+                    },
+                    "405": {
+                        "description": "Invalid input"
+                    }
+                }
+            }
+        },
+        "/xml": {
+            "post": {
+                "tags": [
+                    "predictor"
+                ],
+                "summary": "Predict future cases in Xml",
+                "description": "",
+                "operationId": "getXmlPrediction",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/xml"
+                ],
+                "parameters": [{
+                    "in": "body",
+                    "name": "body",
+                    "description": "Current data passed to API",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/definitions/Data"
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/Estimates"
+                        }
+                    },
+                    "405": {
+                        "description": "Invalid input"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Region": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "avgAge": {
+                    "type": "number"
+                },
+                "avgDailyIncomeInUSD": {
+                    "type": "number"
+                },
+                "avgDailyIncomePopulation": {
+                    "type": "number"
+                }
+            },
+            "xml": {
+                "name": "region"
+            }
+        },
+        "Data": {
+            "type": "object",
+            "properties": {
+                "region": {
+                    "$ref": "#/definitions/Region"
+                },
+                "periodType": {
+                    "type": "string",
+                    "description": "Period type",
+                    "enum": [
+                        "days",
+                        "weeks",
+                        "months"
+                    ]
+                },
+                "timeToElapse": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "reportedCases": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "population": {
+                    "type": "string",
+                    "format": "int32"
+                },
+                "totalHospitalBeds": {
+                    "type": "integer",
+                    "format": "int32"
+                }
+            },
+            "xml": {
+                "name": "data"
+            }
+        },
+        "Impact": {
+            "type": "object",
+            "properties": {
+                "currentlyInfected": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "infectionsByRequestedTime": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "severeCasesByRequestedTime": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "hospitalBedsByRequestedTime": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "casesForICUByRequestedTime": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "casesForVentilatorsByRequestedTime": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "dollarsInFlight": {
+                    "type": "integer",
+                    "format": "int64"
+                }
+            }
+        },
+        "Estimates": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "$ref": "#/definitions/Data"
+                },
+                "impact": {
+                    "$ref": "#/definitions/Impact"
+                },
+                "severeImpact": {
+                    "$ref": "#/definitions/Impact"
+                }
+            },
+            "xml": {
+                "name": "Category"
+            }
+        }
+    },
+    "externalDocs": {
+        "description": "Find out more about Swagger",
+        "url": "http://swagger.io"
+    }
+}
