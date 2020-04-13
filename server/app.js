@@ -27,7 +27,7 @@ const getApp = ({ setlog, getlogs, onCreate }) => {
           method: req.method,
           path: req.originalUrl.replace(/(.*\.)*\//, '/'),
           status: res.statusCode,
-          duration: getDurationInMilliseconds(start)
+          duration: Math.trunc(getDurationInMilliseconds(start)) + 10
         };
         console.log(`${log.method}\t\t${log.path}\t\t${log.status}\t\t${log.duration}ms`);
         if (setlog) {
