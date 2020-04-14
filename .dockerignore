@@ -105,4 +105,9 @@ dist
 
 # custom
 audits/
+manifest/
+*.md
+.deployment
+.github/
+.vscode/
 kubeconfig/

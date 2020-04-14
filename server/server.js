@@ -5,6 +5,7 @@ import config from './config';
 
 
 const port = config.PORT;
+const host = config.HOST;
 const connString = config.DB_CONNECTION_STRING;
 const database = config.DATABASE_ID;
 const container = config.CONTAINER;
@@ -30,4 +31,4 @@ const app = express({
   getlogs: () => dbHelper.getAllItems()
 });
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+app.listen(port, host, () => console.log(`Example app listening on port ${port}!`));
