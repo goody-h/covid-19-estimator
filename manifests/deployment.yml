@@ -13,20 +13,20 @@ spec:
         - name: covid19estimator 
           image: covid19reg.azurecr.io/covid19estimator
           env:
-            - name: CUSTOMCONNSTR_covid_db_conn
-              valueFrom:
-                secretKeyRef:
-                  name: covidsecrets
-                  key: db_conn
-            - name: DATABASE_ID
-              valueFrom:
-                secretKeyRef:
-                  name: covidsecrets
-                  key: database
-            - name: CONTAINER
-              valueFrom:
-                secretKeyRef:
-                  name: covidsecrets
-                  key: container
+          - name: CUSTOMCONNSTR_covid_db_conn
+            valueFrom:
+              secretKeyRef:
+                name: covidsecrets
+                key: db_conn
+          - name: DATABASE_ID
+            valueFrom:
+              secretKeyRef:
+                name: covidsecrets
+                key: database
+          - name: CONTAINER
+            valueFrom:
+              secretKeyRef:
+                name: covidsecrets
+                key: container
           ports:
           - containerPort: 8080
